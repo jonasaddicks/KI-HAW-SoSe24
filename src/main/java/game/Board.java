@@ -1,13 +1,15 @@
-package vierGewinnt;
+package game;
 
-import org.apache.commons.math3.util.Pair;
+import datatypes.Pair;
+import player.Player;
 
 import java.util.HashMap;
 import java.util.Objects;
 
+import static game.GameProperties.COLS;
+import static game.GameProperties.ROWS;
+
 public class Board {
-    private static final int ROWS = 6;
-    private static final int COLS = 7;
     private static final Token BLANKSPACE = new Token(null, new String(Character.toChars(0x000026AB)), -1, -1);
 
     private final Token[][] board = new Token[ROWS][COLS];
@@ -88,7 +90,7 @@ public class Board {
         return hasWon;
     }
 
-    private boolean checkWinningConditions(Token t) {
+    private boolean checkWinningConditions(Token token) {
         int[][] directions = {
                 {0, 1},     //horizontal
                 {1, 0},     //vertical
@@ -97,20 +99,20 @@ public class Board {
         };
 
         for (int[] direction : directions) {
-            int dir1 = checkInDirection(t, direction[0], direction[1]);
-            int dir2 = checkInDirection(t, -direction[0], -direction[1]);
+            int dir1 = checkInDirection(token, direction[0], direction[1]);
+            int dir2 = checkInDirection(token, -direction[0], -direction[1]);
             if (dir1 + dir2 - 1 >= 4) {
-                hasWon = t.owner;
+                hasWon = token.owner;
                 return true;
             }
         }
         return false;
     }
 
-    private int checkInDirection(Token t, int deltaRow, int deltaCol) {
-        int row = t.row;
-        int col = t.col;
-        int playerID = t.owner.getID();
+    private int checkInDirection(Token token, int deltaRow, int deltaCol) {
+        int row = token.row;
+        int col = token.col;
+        int playerID = token.owner.getID();
         int countLine = 0;
 
         while (row < ROWS && row >= 0 && col < COLS && col >= 0 && Objects.nonNull(board[row][col].owner) && board[row][col].owner.getID() == playerID) {
