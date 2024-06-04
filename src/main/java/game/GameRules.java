@@ -5,6 +5,8 @@ import player.HumanPlayer;
 import player.Player;
 import player.PlayerProperty;
 
+import java.util.Objects;
+
 public class GameRules {
 
     private static GameRules INSTANCE;
@@ -35,14 +37,26 @@ public class GameRules {
 
         while(!board.getIsGameFinished()) {
 
-            if(counter % 2 == 0) {
-                player2.makeMove();
-            } else {
-                player1.makeMove();
-            }
+            System.out.printf("Turn: %d%n", counter);
             board.printBoard();
 
+            if(counter % 2 == 0) {
+                System.out.printf("Player2's turn%n%n");
+                if (!player2.makeMove()) {
+                    System.err.printf("Invalid move - try again%n%n");
+                    counter--;
+                }
+            } else {
+                System.out.printf("Player1's turn%n%n");
+                if (!player1.makeMove()) {
+                    System.err.printf("Invalid move - try again%n%n");
+                    counter--;
+                }
+            }
             counter++;
         }
+
+        board.printBoard();
+        System.out.printf("Game over - %s has won!", Objects.nonNull(board.getHasWon()) ? board.getHasWon() : "no one");
     }
 }

@@ -2,6 +2,8 @@ package player;
 
 import game.Board;
 
+import java.util.Random;
+
 public class AIPlayer extends Player {
 
     public AIPlayer(PlayerProperty playerProperty, Board board) {
@@ -9,8 +11,11 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public void makeMove() {
+    public boolean makeMove() {
         //TODO
+        Random rand = new Random();
+        int move = rand.nextInt(8) + 1;
+        return board.placeToken(move, this);
     }
 
     private int calculateMove() {
@@ -55,7 +60,7 @@ public class AIPlayer extends Player {
             } else {
                 int minEval = Integer.MAX_VALUE;
                 for (int col = 1; col < 8; col++) {
-                    if(board.placeToken(col, getOponent())) {
+                    if(board.placeToken(col, this)) {
                         // Annahme: Spieler 2 ist der minimierende Spieler
                         int eval = minimax(board, depth - 1, true, alpha, beta);
                         board.removeToken(col);

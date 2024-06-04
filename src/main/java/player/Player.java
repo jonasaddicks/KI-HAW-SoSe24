@@ -28,5 +28,10 @@ public abstract class Player {
 
 
 
-    public abstract void makeMove();
+    public abstract boolean makeMove();
+
+    @Override
+    public String toString() {
+        return token;
+    }
 }
