@@ -29,8 +29,4 @@ public class Pair<K, V> {
     public String toString() {
         return "[" + this.getKey() + ", " + this.getValue() + "]";
     }
-
-    public static <K, V> Pair<K, V> create(K k, V v) {
-        return new Pair(k, v);
-    }
 }

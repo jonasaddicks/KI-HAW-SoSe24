@@ -147,8 +147,8 @@ public class Board {
 
 
     public static class Token {
-        Player owner;
-        String tokenRepresentation;
+        public Player owner;
+        public String tokenRepresentation;
         int row;
         int col;
 

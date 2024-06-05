@@ -21,10 +21,12 @@ public class GameRules {
         this.board = new Board();
         if (GameProperties.PLAYER1_STARTS) {
             player1 = new HumanPlayer(PlayerProperty.PLAYER1, board);
-            player2 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board) : new HumanPlayer(PlayerProperty.PLAYER2, board);
+            player2 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board, player1) : new HumanPlayer(PlayerProperty.PLAYER2, board, player1);
+            player1.setOpponent(player2);
         } else {
             player2 = new HumanPlayer(PlayerProperty.PLAYER1, board);
-            player1 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board) : new HumanPlayer(PlayerProperty.PLAYER2, board);
+            player1 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board, player2) : new HumanPlayer(PlayerProperty.PLAYER2, board, player2);
+            player2.setOpponent(player1);
         }
     }
 
