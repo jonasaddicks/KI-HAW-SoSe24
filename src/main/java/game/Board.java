@@ -1,10 +1,9 @@
 package game;
 
-import datatypes.Pair;
 import player.Player;
 
-import java.util.HashMap;
 import java.util.Objects;
+import java.util.Stack;
 
 import static game.GameProperties.COLS;
 import static game.GameProperties.ROWS;
@@ -13,7 +12,7 @@ public class Board {
     private static final Token BLANKSPACE = new Token(null, new String(Character.toChars(0x000026AB)), -1, -1);
 
     private final Token[][] board = new Token[ROWS][COLS];
-    private final HashMap<Pair<Integer, Integer>, Token> winningConditions = new HashMap<>();
+    private final Stack<Token> winningConditions = new Stack<>();
     private final int[] currentHeightMap = new int[COLS];
 
     private int heightSum = 0;
@@ -57,7 +56,7 @@ public class Board {
         Token placedToken = new Token(owner, owner.getToken(), innerRow, innerCol);
         board[innerRow][innerCol] = placedToken;
         if ((innerRow >= winSectorRowsMin && innerRow <= winSectorRowsMax) || (innerCol >= winSectorColsMin && innerCol <= winSectorColsMax)) {
-            winningConditions.put(new Pair<>(innerRow, innerCol), placedToken);
+            winningConditions.add(placedToken);
         }
 
         currentHeightMap[innerCol]++;
@@ -71,7 +70,9 @@ public class Board {
         int innerCol = col - 1;
         int innerRow = currentHeightMap[innerCol] - 1;
         board[innerRow][innerCol] = BLANKSPACE;
-        winningConditions.remove(new Pair<>(innerRow, innerCol));
+        if ((innerRow >= winSectorRowsMin && innerRow <= winSectorRowsMax) || (innerCol >= winSectorColsMin && innerCol <= winSectorColsMax)) {
+            winningConditions.removeLast();
+        }
 
         currentHeightMap[innerCol]--;
         heightSum--;
@@ -79,7 +80,7 @@ public class Board {
     }
 
     private void checkGameIsFinished(){
-        isGameFinished = isFull() || winningConditions.values().stream().anyMatch(this::checkWinningConditions);
+        isGameFinished = isFull() || winningConditions.stream().anyMatch(this::checkWinningConditions);
     }
 
     public boolean getIsGameFinished() {
@@ -88,6 +89,10 @@ public class Board {
 
     public Player getHasWon() {
         return hasWon;
+    }
+
+    public Stack<Token> getWinningConditions() {
+        return winningConditions;
     }
 
     private boolean checkWinningConditions(Token token) {
