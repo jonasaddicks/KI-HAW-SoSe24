@@ -2,12 +2,16 @@ package player;
 
 import game.Board;
 
+import java.util.Stack;
+import java.util.stream.Stream;
+
 public abstract class Player {
 
     private final String token;
     private final int id;
     protected final Board board;
     private Player opponent;
+    private Stack<Board.Token> tokensPlayed;
 
 
 
@@ -20,6 +24,7 @@ public abstract class Player {
         this.id = playerProperty.getID(playerProperty);
         this.board = board;
         this.opponent = opponent;
+        tokensPlayed = new Stack<>();
     }
 
 
@@ -38,6 +43,18 @@ public abstract class Player {
 
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
+    }
+
+    public void removeLastToken() {
+        this.tokensPlayed.removeLast();
+    }
+
+    public void addToken(Board.Token token) {
+        this.tokensPlayed.push(token);
+    }
+
+    public Stream<Board.Token> getPlayersTokens() {
+        return this.tokensPlayed.stream();
     }
 
 

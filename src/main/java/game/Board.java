@@ -54,6 +54,8 @@ public class Board {
         int innerRow = currentHeightMap[innerCol];
 
         Token placedToken = new Token(owner, owner.getToken(), innerRow, innerCol);
+        owner.addToken(placedToken);
+
         board[innerRow][innerCol] = placedToken;
         if ((innerRow >= winSectorRowsMin && innerRow <= winSectorRowsMax) || (innerCol >= winSectorColsMin && innerCol <= winSectorColsMax)) {
             winningConditions.add(placedToken);
@@ -69,6 +71,10 @@ public class Board {
     public void removeToken(int col) {
         int innerCol = col - 1;
         int innerRow = currentHeightMap[innerCol] - 1;
+
+        Token token = board[innerRow][innerCol];
+        token.owner.removeLastToken();
+
         board[innerRow][innerCol] = BLANKSPACE;
         if ((innerRow >= winSectorRowsMin && innerRow <= winSectorRowsMax) || (innerCol >= winSectorColsMin && innerCol <= winSectorColsMax)) {
             winningConditions.removeLast();
@@ -154,8 +160,8 @@ public class Board {
     public static class Token {
         public Player owner;
         public String tokenRepresentation;
-        int row;
-        int col;
+        public int row;
+        public int col;
 
         public Token(Player owner, String tokenRepresentation, int row, int col) {
             this.owner = owner;

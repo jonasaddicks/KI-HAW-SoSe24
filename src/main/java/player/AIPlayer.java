@@ -26,7 +26,7 @@ public class AIPlayer extends Player {
 
         for (int i = 1; i < 8; i++) {
             if (board.placeToken(i, this)) {
-                int value = minimax(8, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(i);
 
                 if (value > score) {
@@ -77,10 +77,35 @@ public class AIPlayer extends Player {
 
 
 
-    public int evaluateBoard() {
+    private static final int[][] posScore = {
+            {3, 4, 5, 7, 5, 4, 3},
+            {4, 6, 8, 10, 8, 6, 4},
+            {5, 8, 11, 13, 11, 8, 5},
+            {5, 8, 11, 13, 11, 8, 5},
+            {4, 6, 8, 10, 8, 6, 4},
+            {3, 4, 5, 7, 5, 4, 3}
+    };
+
+    private int evaluateBoard() {
         int evaluationScore = 0;
-        //TODO
+
+        evaluationScore += evalPosScore(this);
+        evaluationScore -= evalPosScore(this.getOpponent());
+
+        if (board.getIsGameFinished()) {
+            evaluationScore += evalGameWon(this);
+            evaluationScore -= evalGameWon(this.getOpponent());
+        }
+
         return evaluationScore;
+    }
+
+    private int evalPosScore(Player player) {
+        return player.getPlayersTokens().map(t -> posScore[t.row][t.col]).mapToInt(Integer::intValue).sum();
+    }
+
+    private int evalGameWon(Player player) {
+        return board.getHasWon().getID() == player.getID() ? 1000 : 0;
     }
 
     //TODO evaluation properties
