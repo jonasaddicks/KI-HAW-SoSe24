@@ -102,6 +102,7 @@ public class Board {
     }
 
     private boolean checkWinningConditions(Token token) {
+        //TODO save as static final
         int[][] directions = {
                 {0, 1},     //horizontal
                 {1, 0},     //vertical

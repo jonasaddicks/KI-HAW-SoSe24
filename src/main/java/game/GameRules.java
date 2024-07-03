@@ -1,6 +1,6 @@
 package game;
 
-import player.AIPlayer;
+import player.ai.AIPlayer;
 import player.HumanPlayer;
 import player.Player;
 import player.PlayerProperty;
@@ -17,16 +17,55 @@ public class GameRules {
 
 
 
-    private GameRules(){
+    private GameRules() {
         this.board = new Board();
-        if (GameProperties.PLAYER1_STARTS) {
-            player1 = new HumanPlayer(PlayerProperty.PLAYER1, board);
-            player2 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board, player1) : new HumanPlayer(PlayerProperty.PLAYER2, board, player1);
-            player1.setOpponent(player2);
-        } else {
-            player2 = new HumanPlayer(PlayerProperty.PLAYER1, board);
-            player1 = GameProperties.SINGLEPLAYER ? new AIPlayer(PlayerProperty.PLAYER2, board, player2) : new HumanPlayer(PlayerProperty.PLAYER2, board, player2);
-            player2.setOpponent(player1);
+//        if (GameProperties.PLAYER1_STARTS) {
+//            player1 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+//            player2 = GameProperties.GAMEMODE ? new AIPlayer(PlayerProperty.PLAYER2, board, player1) : new HumanPlayer(PlayerProperty.PLAYER2, board, player1);
+//            player1.setOpponent(player2);
+//        } else {
+//            player2 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+//            player1 = GameProperties.GAMEMODE ? new AIPlayer(PlayerProperty.PLAYER2, board, player2) : new HumanPlayer(PlayerProperty.PLAYER2, board, player2);
+//            player2.setOpponent(player1);
+//        }
+
+        switch (GameProperties.GAMEMODE) {
+            case 0 : { //MULTIPLAYER
+                if (GameProperties.PLAYER1_STARTS) {
+                    player1 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+                    player2 = new HumanPlayer(PlayerProperty.PLAYER2, board, player1);
+                    player1.setOpponent(player1);
+                } else {
+                    player2 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+                    player1 = new HumanPlayer(PlayerProperty.PLAYER2, board, player2);
+                    player2.setOpponent(player1);
+                }
+                break;
+            }
+            case 1 : { //SINGLE PLAYER
+                if (GameProperties.PLAYER1_STARTS) {
+                    player1 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+                    player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1);
+                    player1.setOpponent(player2);
+                } else {
+                    player2 = new HumanPlayer(PlayerProperty.PLAYER1, board);
+                    player1 = new AIPlayer(PlayerProperty.PLAYER2, board, player2);
+                    player2.setOpponent(player1);
+                }
+                break;
+            }
+            case 2 : { //AIONLY
+                if (GameProperties.PLAYER1_STARTS) {
+                    player1 = new AIPlayer(PlayerProperty.PLAYER1, board);
+                    player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1);
+                    player1.setOpponent(player2);
+                } else {
+                    player2 = new AIPlayer(PlayerProperty.PLAYER1, board);
+                    player1 = new AIPlayer(PlayerProperty.PLAYER2, board, player2);
+                    player2.setOpponent(player1);
+                }
+                break;
+            }
         }
     }
 

@@ -1,6 +1,8 @@
-package player;
+package player.ai;
 
 import game.Board;
+import player.Player;
+import player.PlayerProperty;
 
 import java.util.Objects;
 
@@ -92,7 +94,7 @@ public class AIPlayer extends Player {
         evaluationScore += evalPosScore(this);
         evaluationScore -= evalPosScore(this.getOpponent());
 
-        if (board.getIsGameFinished()) {
+        if (board.getIsGameFinished() && Objects.nonNull(board.getHasWon())) {
             evaluationScore += evalGameWon(this);
             evaluationScore -= evalGameWon(this.getOpponent());
         }
