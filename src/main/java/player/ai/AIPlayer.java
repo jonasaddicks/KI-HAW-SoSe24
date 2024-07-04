@@ -5,15 +5,19 @@ import player.Player;
 import player.PlayerProperty;
 
 import java.util.Objects;
+import java.util.Random;
+
+import static game.GameProperties.COLS;
+import static game.GameProperties.ROWS;
 
 public class AIPlayer extends Player {
 
-    public AIPlayer(PlayerProperty playerProperty, Board board) {
-        super(playerProperty, board);
+    public AIPlayer(PlayerProperty playerProperty, Board board, boolean beginningPlayer) {
+        super(playerProperty, board, beginningPlayer);
     }
 
-    public AIPlayer(PlayerProperty playerProperty, Board board, Player opponent) {
-        super(playerProperty, board, opponent);
+    public AIPlayer(PlayerProperty playerProperty, Board board, Player opponent, boolean beginningPlayer) {
+        super(playerProperty, board, opponent, beginningPlayer);
     }
 
     @Override
@@ -25,15 +29,23 @@ public class AIPlayer extends Player {
     private int calculateMove() {
         int bestMove = -1;
         int score = Integer.MIN_VALUE;
+        int propabilityBound = 2;
 
-        for (int i = 1; i < 8; i++) {
+        for (int i = 1; i <= COLS; i++) {
             if (board.placeToken(i, this)) {
                 int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(i);
 
-                if (value > score) {
-                    score = value;
-                    bestMove = i;
+                if (value >= score) {
+                    if (value == score) {
+                        if (new Random().nextInt(propabilityBound) == 0) {
+                            bestMove = i;
+                            propabilityBound ++;
+                        }
+                    } else {
+                        bestMove = i;
+                        score = value;
+                    }
                 }
             }
         }
@@ -43,12 +55,12 @@ public class AIPlayer extends Player {
 
     public int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
         if (depth == 0 || board.getIsGameFinished()) {
-            return evaluateBoard();
+            return evaluateBoard() * (depth + 1);
         }
 
         if (isMaximizing) { //AI IS MAXIMIZING PLAYER
             int maxEval = Integer.MIN_VALUE;
-            for (int col = 1; col < 8; col++) {
+            for (int col = 1; col < COLS; col++) {
                 if (board.placeToken(col, this)) {
                     int eval = minimax(depth - 1, false, alpha, beta);
                     board.removeToken(col);
@@ -62,7 +74,7 @@ public class AIPlayer extends Player {
             return maxEval;
         } else { //AI OPPONENT IS MINIMIZING PLAYER
             int minEval = Integer.MAX_VALUE;
-            for (int col = 1; col < 8; col++) {
+            for (int col = 1; col < COLS; col++) {
                 if(board.placeToken(col, this.getOpponent())) {
                     int eval = minimax(depth - 1, true, alpha, beta);
                     board.removeToken(col);
@@ -91,8 +103,8 @@ public class AIPlayer extends Player {
     private int evaluateBoard() {
         int evaluationScore = 0;
 
-        evaluationScore += evalPosScore(this);
-        evaluationScore -= evalPosScore(this.getOpponent());
+//        evaluationScore += evalPosScore(this);
+//        evaluationScore -= evalPosScore(this.getOpponent());
 
         if (board.getIsGameFinished() && Objects.nonNull(board.getHasWon())) {
             evaluationScore += evalGameWon(this);

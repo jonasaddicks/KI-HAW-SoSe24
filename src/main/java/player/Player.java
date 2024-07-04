@@ -9,19 +9,25 @@ public abstract class Player {
 
     private final String token;
     private final int id;
+    private boolean beginningPlayer;
+    private int gamesWon;
+
     protected final Board board;
     private Player opponent;
     private Stack<Board.Token> tokensPlayed;
 
 
 
-    public Player(PlayerProperty playerProperty, Board board) {
-        this(playerProperty, board, null);
+    public Player(PlayerProperty playerProperty, Board board, boolean beginningPlayer) {
+        this(playerProperty, board, null, beginningPlayer);
     }
 
-    public Player(PlayerProperty playerProperty, Board board, Player opponent) {
+    public Player(PlayerProperty playerProperty, Board board, Player opponent, boolean beginningPlayer) {
         this.token = playerProperty.getToken(playerProperty);
         this.id = playerProperty.getID(playerProperty);
+        this.beginningPlayer = beginningPlayer;
+        this.gamesWon = 0;
+
         this.board = board;
         this.opponent = opponent;
         tokensPlayed = new Stack<>();
@@ -35,6 +41,22 @@ public abstract class Player {
 
     public int getID() {
         return this.id;
+    }
+
+    public boolean isBeginningPlayer() {
+        return this.beginningPlayer;
+    }
+
+    public void setBeginningPlayer(boolean beginningPlayer) {
+        this.beginningPlayer = beginningPlayer;
+    }
+
+    public void gameWon() {
+        this.gamesWon++;
+    }
+
+    public int getGamesWon() {
+        return this.gamesWon;
     }
 
     public Player getOpponent() {
@@ -55,6 +77,10 @@ public abstract class Player {
 
     public Stream<Board.Token> getPlayersTokens() {
         return this.tokensPlayed.stream();
+    }
+
+    public void clearTokens() {
+        this.tokensPlayed.clear();
     }
 
 

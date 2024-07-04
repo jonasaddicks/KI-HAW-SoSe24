@@ -8,12 +8,12 @@ public class HumanPlayer extends Player {
 
     private final Scanner PROMPT = new Scanner(System.in);
 
-    public HumanPlayer(PlayerProperty playerProperty, Board board) {
-        super(playerProperty, board);
+    public HumanPlayer(PlayerProperty playerProperty, Board board, boolean beginningPlayer) {
+        super(playerProperty, board, beginningPlayer);
     }
 
-    public HumanPlayer(PlayerProperty playerProperty, Board board, Player opponent) {
-        super(playerProperty, board, opponent);
+    public HumanPlayer(PlayerProperty playerProperty, Board board, Player opponent, boolean beginningPlayer) {
+        super(playerProperty, board, opponent, beginningPlayer);
     }
 
     @Override

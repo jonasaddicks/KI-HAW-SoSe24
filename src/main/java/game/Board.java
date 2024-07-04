@@ -11,13 +11,23 @@ import static game.GameProperties.ROWS;
 public class Board {
     private static final Token BLANKSPACE = new Token(null, new String(Character.toChars(0x000026AB)), -1, -1);
 
+    private final String printSeparator;
+    private final String printBottom;
+
     private final Token[][] board = new Token[ROWS][COLS];
-    private final Stack<Token> winningConditions = new Stack<>();
-    private final int[] currentHeightMap = new int[COLS];
+    private Stack<Token> winningConditions = new Stack<>();
+    private int[] currentHeightMap = new int[COLS];
 
     private int heightSum = 0;
     private boolean isGameFinished = false;
     private Player hasWon = null;
+
+    private static final int[][] directions = {
+            {0, 1},     //horizontal
+            {1, 0},     //vertical
+            {1, 1},     //diagonal up
+            {1, -1},    //diagonal down
+    };
 
     private final int winSectorRowsMin;
     private final int winSectorRowsMax;
@@ -33,6 +43,38 @@ public class Board {
             }
         }
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("----");
+        for(int i = 0; i < COLS; i++) {
+            if (i % 5 == 0) {
+                sb.append("------");
+            } else {
+                sb.append("-----");
+            }
+        }
+        sb.append(String.format("%n"));
+        printSeparator = sb.toString();
+        sb.delete(0, sb.length());
+
+        sb.append("  |");
+        for(int i = 1; i <= COLS; i++) {
+            if (i >= 10) {
+                if (i % 5 == 0) {
+                    sb.append(String.format("  %d |", i));
+                } else {
+                    sb.append(String.format(" %d |", i));
+                }
+            } else {
+                if (i % 3 == 0) {
+                    sb.append(String.format("  %d  |", i));
+                } else {
+                    sb.append(String.format("  %d |", i));
+                }
+            }
+        }
+        sb.append(String.format("%n"));
+        printBottom = sb.toString();
+
         boolean sizeRows = ROWS > 6;
         winSectorRowsMin = sizeRows ? 3 : 2;
         winSectorRowsMax = sizeRows ? ROWS - 4 : 2;
@@ -44,6 +86,25 @@ public class Board {
     public Token[][] getBoard() {
         return board;
     }
+
+    public void resetBoard(){
+        clearBoard();
+        this.winningConditions = new Stack<>();
+        this.currentHeightMap = new int[COLS];
+        this.heightSum = 0;
+        this.isGameFinished = false;
+        this.hasWon = null;
+    }
+
+    private void clearBoard() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                board[i][j] = BLANKSPACE;
+            }
+        }
+    }
+
+
 
     public boolean placeToken(int col, Player owner) {
         if (col < 1 || col > COLS || currentHeightMap[col - 1] > ROWS - 1) {
@@ -86,7 +147,7 @@ public class Board {
     }
 
     private void checkGameIsFinished(){
-        isGameFinished = isFull() || winningConditions.stream().anyMatch(this::checkWinningConditions);
+        isGameFinished = winningConditions.stream().anyMatch(this::checkWinningConditions) || isFull();
     }
 
     public boolean getIsGameFinished() {
@@ -97,19 +158,13 @@ public class Board {
         return hasWon;
     }
 
+
+
     public Stack<Token> getWinningConditions() {
         return winningConditions;
     }
 
     private boolean checkWinningConditions(Token token) {
-        //TODO save as static final
-        int[][] directions = {
-                {0, 1},     //horizontal
-                {1, 0},     //vertical
-                {1, 1},     //diagonal up
-                {1, -1},    //diagonal down
-        };
-
         for (int[] direction : directions) {
             int dir1 = checkInDirection(token, direction[0], direction[1]);
             int dir2 = checkInDirection(token, -direction[0], -direction[1]);
@@ -136,20 +191,43 @@ public class Board {
         return countLine;
     }
 
+    public int getMajorThreats(Player player) {
+        return winningConditions.stream()
+                .filter(t -> t.owner.getID() == player.getID())
+                .mapToInt(this::getMajorThreats)
+                .sum();
+    }
+
+    private int getMajorThreats(Token token) {
+        //TODO
+        return 0;
+    }
+
+    public int getMinorThreats(Player player) {
+        return winningConditions.stream()
+                .filter(t -> t.owner.getID() == player.getID())
+                .mapToInt(this::getMinorThreats)
+                .sum();
+    }
+
+    private int getMinorThreats(Token token) {
+        //TODO
+        return 0;
+    }
+
 
 
     public void printBoard() {
-        //TODO dynamisieren, cleanen
         for (int i = ROWS - 1; i >= 0; i--) {
-            System.out.printf("----------------------------------------%n%d ", i + 1);
+            System.out.print(printSeparator);
+            System.out.printf("%d ", i + 1);
             for (int j = 0; j < COLS; j++) {
                 System.out.print("| " + board[i][j] + " ");
             }
-            System.out.println("|");
+            System.out.printf("|%n");
         }
-        System.out.println("----------------------------------------");
-        System.out.println("  |  1 |  2 |  3  |  4 |  5 |  6  |  7");
-        System.out.println();
+        System.out.printf(printSeparator);
+        System.out.print(printBottom);
     }
 
     private boolean isFull() {
