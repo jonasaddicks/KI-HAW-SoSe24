@@ -6,9 +6,9 @@ public class Genome {
 
     private final static int genomeLength = 92;
 
-    private int[] genome;
-    private int[][] posScoreFirst;
-    private int[][] posScoreSecond;
+    private byte[] genome;
+    private byte[][] posScoreFirst;
+    private byte[][] posScoreSecond;
 
 
 
@@ -17,19 +17,19 @@ public class Genome {
         updatePosScore();
     }
 
-    public Genome(int[] genome) {
+    public Genome(byte[] genome) {
         this.genome = Arrays.copyOf(genome, genomeLength);
         updatePosScore();
     }
 
-    private int[] generateRandomGenome() {
-        int[] genome = new int[genomeLength];
+    private byte[] generateRandomGenome() {
+        byte[] genome = new byte[genomeLength];
         //TODO
         return genome;
     }
 
     private void updatePosScore() {
-        int[][] posScoreFirst = new int[6][7];
+        byte[][] posScoreFirst = new byte[6][7];
         int counter = 8;
         for (int i = 0; i < posScoreFirst.length; i++) {
             for (int j = 0; j < posScoreFirst[i].length; j++) {
@@ -39,9 +39,9 @@ public class Genome {
         }
         this.posScoreFirst = posScoreFirst;
 
-        int[][] posScoreSecond = new int[6][7];
-        for (int i = 0; i < posScoreSecond.length; i++) {
-            for (int j = 0; j < posScoreSecond[i].length; j++) {
+        byte[][] posScoreSecond = new byte[6][7];
+        for (byte i = 0; i < posScoreSecond.length; i++) {
+            for (byte j = 0; j < posScoreSecond[i].length; j++) {
                 posScoreSecond[i][j] = genome[counter];
                 counter++;
             }
@@ -51,43 +51,43 @@ public class Genome {
 
 
 
-    public int posScoreWeightPlayer() {
+    public byte posScoreWeightPlayer() {
         return genome[0];
     }
 
-    public int posScoreWeightOpponent() {
+    public byte posScoreWeightOpponent() {
         return genome[1];
     }
 
-    public int majorWeightPlayer() {
+    public byte majorWeightPlayer() {
         return genome[2];
     }
 
-    public int majorWeightOpponent() {
+    public byte majorWeightOpponent() {
         return genome[3];
     }
 
-    public int minorWeightPlayer() {
+    public byte minorWeightPlayer() {
         return genome[4];
     }
 
-    public int minorWeightOpponent() {
+    public byte minorWeightOpponent() {
         return genome[5];
     }
 
-    public int winWeightPlayer() {
+    public byte winWeightPlayer() {
         return genome[6];
     }
 
-    public int winWeightOpponent() {
+    public byte winWeightOpponent() {
         return genome[7];
     }
 
-    public int[][] posScoreFirst() {
+    public byte[][] posScoreFirst() {
         return this.posScoreFirst;
     }
 
-    public int[][] posScoreSecond() {
+    public byte[][] posScoreSecond() {
         return this.posScoreSecond;
     }
 

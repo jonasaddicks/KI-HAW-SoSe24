@@ -16,7 +16,7 @@ public class GameRules {
     private Board board;
     private Player player1;
     private Player player2;
-    private Genome fittestGenome;
+    private Genome fittestGenome = new Genome();//TODO
 
 
 
@@ -51,11 +51,11 @@ public class GameRules {
             }
             case 2 : { //AIONLY
                 if (GameProperties.PLAYER1_STARTS) {
-                    player1 = new AIPlayer(PlayerProperty.PLAYER1, board, true, new Genome());
+                    player1 = new AIPlayer(PlayerProperty.PLAYER1, board, true, fittestGenome);
                     player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, fittestGenome);
                     player1.setOpponent(player2);
                 } else {
-                    player2 = new AIPlayer(PlayerProperty.PLAYER1, board, false, new Genome());
+                    player2 = new AIPlayer(PlayerProperty.PLAYER1, board, false, fittestGenome);
                     player1 = new AIPlayer(PlayerProperty.PLAYER2, board, player2, true, fittestGenome);
                     player2.setOpponent(player1);
                 }

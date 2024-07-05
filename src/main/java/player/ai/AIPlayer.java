@@ -12,8 +12,8 @@ import static game.GameProperties.COLS;
 public class AIPlayer extends Player {
 
     private Genome genome;
-    private int[][] posScoreFirst;
-    private int[][] posScoreSecond;
+    private byte[][] posScoreFirst;
+    private byte[][] posScoreSecond;
 
     public AIPlayer(PlayerProperty playerProperty, Board board, boolean beginningPlayer, Genome genome) {
         super(playerProperty, board, beginningPlayer);
@@ -120,9 +120,9 @@ public class AIPlayer extends Player {
 
     private int evalPosScore(Player player) {
         if (this.isBeginningPlayer()) {
-            return player.getPlayersTokens().map(t -> posScoreFirst[t.row][t.col]).mapToInt(Integer::intValue).sum();
+            return player.getPlayersTokens().map(t -> posScoreFirst[t.row][t.col]).mapToInt(Byte::intValue).sum();
         } else {
-            return player.getPlayersTokens().map(t -> posScoreSecond[t.row][t.col]).mapToInt(Integer::intValue).sum();
+            return player.getPlayersTokens().map(t -> posScoreSecond[t.row][t.col]).mapToInt(Byte::intValue).sum();
         }
     }
 
