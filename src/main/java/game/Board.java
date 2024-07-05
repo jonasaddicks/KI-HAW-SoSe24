@@ -2,6 +2,7 @@ package game;
 
 import player.Player;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Stack;
 
@@ -192,27 +193,51 @@ public class Board {
     }
 
     public int getMajorThreats(Player player) {
-        return winningConditions.stream()
-                .filter(t -> t.owner.getID() == player.getID())
-                .mapToInt(this::getMajorThreats)
+        return Arrays.stream(board).flatMap(Arrays::stream)
+                .filter(t -> Objects.nonNull(t.owner) && t.owner.getID() == player.getID())
+                .mapToInt(t -> this.getThreats(t, 0))
                 .sum();
-    }
-
-    private int getMajorThreats(Token token) {
-        //TODO
-        return 0;
     }
 
     public int getMinorThreats(Player player) {
-        return winningConditions.stream()
-                .filter(t -> t.owner.getID() == player.getID())
-                .mapToInt(this::getMinorThreats)
+        return Arrays.stream(board).flatMap(Arrays::stream)
+                .filter(t -> Objects.nonNull(t.owner) &&  t.owner.getID() == player.getID())
+                .mapToInt(t -> this.getThreats(t, 1))
                 .sum();
     }
 
-    private int getMinorThreats(Token token) {
-        //TODO
-        return 0;
+    private int getThreats(Token token, int majorMinor) {
+        int dir1 = 0, dir2 = 0;
+        for (int[] direction : directions) {
+            dir1 += checkInDirectionThreats(token, direction[0], direction[1], majorMinor);
+            dir2 += checkInDirectionThreats(token, -direction[0], -direction[1], majorMinor);
+        }
+        return dir1 + dir2;
+    }
+
+    private int checkInDirectionThreats(Token token, int deltaRow, int deltaCol, int majorMinor) {
+        int row = token.row;
+        int col = token.col;
+        int playerID = token.owner.getID();
+        int nullToken = 0, playerToken = 0;
+
+        for (int i = 0; row < ROWS && row >= 0 && col < COLS && col >= 0 && i < 4; i++) {
+            if (Objects.isNull(board[row][col].owner)) {
+                nullToken++;
+            } else {
+                if (board[row][col].owner.getID() == playerID) {
+                    playerToken++;
+                }
+            }
+            row += deltaRow;
+            col += deltaCol;
+        }
+
+        return switch (majorMinor) {
+            case 0 -> (nullToken == 1 && playerToken == 3) ? 1 : 0;
+            case 1 -> (nullToken == 2 && playerToken == 2) ? 1 : 0;
+            default -> 0;
+        };
     }
 
 
