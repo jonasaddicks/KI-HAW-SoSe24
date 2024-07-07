@@ -1,6 +1,7 @@
-package player.ai;
+package player.ai.genetic;
 
 import java.util.Arrays;
+import java.util.Base64;
 
 public class Genome {
 
@@ -89,6 +90,18 @@ public class Genome {
 
     public byte[][] posScoreSecond() {
         return this.posScoreSecond;
+    }
+
+
+
+    public static String encodeGenome(byte[] input) {
+        // Base64-Encoding
+        return Base64.getEncoder().encodeToString(input);
+    }
+
+    public static byte[] decodeGenome(String input) {
+        // Base64-Decoding
+        return Base64.getDecoder().decode(input);
     }
 
 

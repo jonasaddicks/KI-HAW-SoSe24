@@ -3,6 +3,7 @@ package player.ai;
 import game.Board;
 import player.Player;
 import player.PlayerProperty;
+import player.ai.genetic.Genome;
 
 import java.util.Objects;
 import java.util.Random;
@@ -40,6 +41,9 @@ public class AIPlayer extends Player {
             if (board.placeToken(i, this)) {
                 int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(i);
+
+                //TODO temp
+                System.out.printf("%d value: %d%n", i, value);
 
                 if (value >= score) {
                     if (value == score) {
