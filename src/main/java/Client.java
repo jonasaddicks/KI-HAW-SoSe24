@@ -2,6 +2,7 @@ import game.GameProperties;
 import game.GameRules;
 import player.ai.genetic.Genome;
 import player.ai.genetic.GenomeLoader;
+import player.ai.genetic.TrainingGround;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -29,7 +30,7 @@ public class Client {
                     fittestGenome.winEvaluation());
 
             if (GameProperties.GAMEMODE == 3) { // TRAINING
-
+                TrainingGround.initTraining(fittestGenome);
             } else { // NO TRAINING
                 GameRules game  = new GameRules(fittestGenome, null);
                 game.run();

@@ -12,17 +12,34 @@ public class Genome {
     private byte[][] posScoreFirst;
     private byte[][] posScoreSecond;
 
+    private static int populationSize = -1;
+    private int populationID;
+
 
 
     public Genome() {
-        genome = generateRandomGenome();
+        this.genome = generateRandomGenome();
+        populationID = populationSize++;
         updatePosScore();
     }
 
     public Genome(byte[] genome) {
         this.genome = Arrays.copyOf(genome, genomeLength);
+        populationID = populationSize++;
         updatePosScore();
     }
+
+    public Genome(Genome genome) {
+        this.genome = Arrays.copyOf(genome.genome, genome.genome.length);
+        populationID = populationSize++;
+        updatePosScore();
+    }
+
+    public int getPopulationID() {
+        return this.populationID;
+    }
+
+
 
     private byte[] generateRandomGenome() {
         Random random = new Random();

@@ -26,6 +26,8 @@ public class AIPlayer extends Player {
         this.genome = genome;
     }
 
+
+
     @Override
     public boolean makeMove() {
         int calculatedMove = calculateMove();

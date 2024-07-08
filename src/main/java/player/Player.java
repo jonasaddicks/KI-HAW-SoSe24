@@ -12,11 +12,9 @@ public abstract class Player {
     private boolean beginningPlayer;
     private int gamesWon;
 
-    protected final Board board;
+    protected Board board;
     private Player opponent;
     private Stack<Board.Token> tokensPlayed;
-
-
 
     public Player(PlayerProperty playerProperty, Board board, boolean beginningPlayer) {
         this(playerProperty, board, null, beginningPlayer);
