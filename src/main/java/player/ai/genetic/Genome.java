@@ -2,10 +2,11 @@ package player.ai.genetic;
 
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
 
 public class Genome {
 
-    private final static int genomeLength = 92;
+    private final static int genomeLength = 93;
 
     private byte[] genome;
     private byte[][] posScoreFirst;
@@ -24,8 +25,9 @@ public class Genome {
     }
 
     private byte[] generateRandomGenome() {
+        Random random = new Random();
         byte[] genome = new byte[genomeLength];
-        //TODO
+        random.nextBytes(genome);
         return genome;
     }
 
@@ -84,6 +86,10 @@ public class Genome {
         return genome[7];
     }
 
+    public byte winEvaluation() {
+        return genome[92];
+    }
+
     public byte[][] posScoreFirst() {
         return this.posScoreFirst;
     }
@@ -93,6 +99,11 @@ public class Genome {
     }
 
 
+
+    public static String encodeGenome(Genome genome) {
+        // Base64-Encoding
+        return encodeGenome(genome.genome);
+    }
 
     public static String encodeGenome(byte[] input) {
         // Base64-Encoding

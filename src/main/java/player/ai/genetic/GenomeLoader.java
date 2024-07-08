@@ -1,8 +1,6 @@
 package player.ai.genetic;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 public class GenomeLoader {
 
@@ -45,8 +43,32 @@ public class GenomeLoader {
                 try {
                     fileHandler.close();
                 } catch (IOException e) {
-                    /* ignore */
+                    e.printStackTrace();
                 }
+        }
+        return null;
+    }
+
+    public static Genome getCompetingGenome1(File file) {
+        return getCompetingGenomeNr(file, 0);
+    }
+
+    public static Genome getCompetingGenome2(File file) {
+        return getCompetingGenomeNr(file, 1);
+    }
+
+    private static Genome getCompetingGenomeNr(File file, int nr) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int currentLine = 0;
+            while ((line = br.readLine()) != null) {
+                if (currentLine == nr) {
+                    return new Genome(Genome.decodeGenome(line));
+                }
+                currentLine++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

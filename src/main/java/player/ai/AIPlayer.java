@@ -8,9 +8,9 @@ import player.ai.genetic.Genome;
 import java.util.Objects;
 import java.util.Random;
 
-import static game.GameProperties.COLS;
-
 public class AIPlayer extends Player {
+
+    private static final int[] TURN_ORDER = new int[]{4, 5, 6, 7, 1, 2, 3};
 
     private Genome genome;
     private byte[][] posScoreFirst;
@@ -37,22 +37,23 @@ public class AIPlayer extends Player {
         int score = Integer.MIN_VALUE;
         int propabilityBound = 2;
 
-        for (int i = 1; i <= COLS; i++) {
-            if (board.placeToken(i, this)) {
+        for (int i = 0; i < TURN_ORDER.length; i++) {
+            if (board.placeToken(TURN_ORDER[i], this)) {
                 int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                board.removeToken(i);
+                board.removeToken(TURN_ORDER[i]);
 
-                //TODO temp
-                System.out.printf("%d value: %d%n", i, value);
+                //TODO temp debug
+                System.out.printf("%d value: %d%n", TURN_ORDER[i], value);
 
+                //TODO >=
                 if (value >= score) {
                     if (value == score) {
                         if (new Random().nextInt(propabilityBound) == 0) {
-                            bestMove = i;
+                            bestMove = TURN_ORDER[i];
                             propabilityBound ++;
                         }
                     } else {
-                        bestMove = i;
+                        bestMove = TURN_ORDER[i];
                         score = value;
                     }
                 }
@@ -63,15 +64,15 @@ public class AIPlayer extends Player {
 
     public int minimax(int depth, boolean isMaximizing, int alpha, int beta) {
         if (depth == 0 || board.getIsGameFinished()) {
-            return evaluateBoard();
+            return evaluateBoard() * (depth + 1);
         }
 
         if (isMaximizing) { //AI IS MAXIMIZING PLAYER
             int maxEval = Integer.MIN_VALUE;
-            for (int col = 1; col <= COLS; col++) {
-                if (board.placeToken(col, this)) {
+            for (int col = 0; col < TURN_ORDER.length; col++) {
+                if (board.placeToken(TURN_ORDER[col], this)) {
                     int eval = minimax(depth - 1, false, alpha, beta);
-                    board.removeToken(col);
+                    board.removeToken(TURN_ORDER[col]);
                     maxEval = Math.max(maxEval, eval);
                     alpha = Math.max(alpha, maxEval);
                     if (beta <= alpha) {
@@ -82,10 +83,10 @@ public class AIPlayer extends Player {
             return maxEval;
         } else { //AI OPPONENT IS MINIMIZING PLAYER
             int minEval = Integer.MAX_VALUE;
-            for (int col = 1; col <= COLS; col++) {
-                if(board.placeToken(col, this.getOpponent())) {
+            for (int col = 0; col < TURN_ORDER.length; col++) {
+                if(board.placeToken(TURN_ORDER[col], this.getOpponent())) {
                     int eval = minimax(depth - 1, true, alpha, beta);
-                    board.removeToken(col);
+                    board.removeToken(TURN_ORDER[col]);
                     minEval = Math.min(minEval, eval);
                     beta = Math.min(beta, minEval);
                     if (beta <= alpha) {
@@ -106,17 +107,17 @@ public class AIPlayer extends Player {
         int evaluationScore = 0;
 
         evaluationScore += evalPosScore(this) * genome.posScoreWeightPlayer();
-        evaluationScore -= evalPosScore(this.getOpponent()) * genome.posScoreWeightOpponent();
+        evaluationScore += evalPosScore(this.getOpponent()) * genome.posScoreWeightOpponent();
 
         evaluationScore += evalMajorThreats(this) * genome.majorWeightPlayer();
-        evaluationScore -= evalMajorThreats(this.getOpponent()) * genome.majorWeightOpponent();
+        evaluationScore += evalMajorThreats(this.getOpponent()) * genome.majorWeightOpponent();
 
         evaluationScore += evalMinorThreats(this) * genome.minorWeightPlayer();
-        evaluationScore -= evalMinorThreats(this.getOpponent()) * genome.minorWeightOpponent();
+        evaluationScore += evalMinorThreats(this.getOpponent()) * genome.minorWeightOpponent();
 
         if (board.getIsGameFinished() && Objects.nonNull(board.getHasWon())) {
             evaluationScore += evalGameWon(this) * genome.winWeightPlayer();
-            evaluationScore -= evalGameWon(this.getOpponent()) * genome.winWeightOpponent();
+            evaluationScore += evalGameWon(this.getOpponent()) * genome.winWeightOpponent();
         }
 
         return evaluationScore;
@@ -131,7 +132,7 @@ public class AIPlayer extends Player {
     }
 
     private int evalGameWon(Player player) {
-        return board.getHasWon().getID() == player.getID() ? 1 : 0;
+        return board.getHasWon().getID() == player.getID() ? genome.winEvaluation() : 0;
     }
 
     private int evalMajorThreats(Player player) {
