@@ -6,7 +6,9 @@ import player.ai.genetic.TrainingGround;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Client {
     public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class Client {
         double timeStampStart = (double) System.currentTimeMillis() / 1000;
 
         try {
-            Genome fittestGenome = GenomeLoader.getLatestGenome(new File(ResourceLoadHelper.loadResource("genome.selection/fittestSelection")));
+            Genome fittestGenome = GenomeLoader.getLatestGenome(new File(ResourceLoadHelper.loadResource("evolutionary/genome.selection/fittestSelection")));
 
 
             //TODO debug
@@ -33,7 +35,10 @@ public class Client {
 
 
             if (GameProperties.GAMEMODE == 3) { // TRAINING
-                TrainingGround trainingGround = new TrainingGround(fittestGenome);
+                File stats = Paths.get(ResourceLoadHelper.loadResource("evolutionary/stats/genStats")).toFile();
+                File generationSave = Paths.get(ResourceLoadHelper.loadResource("evolutionary/generation")).toFile();
+
+                TrainingGround trainingGround = new TrainingGround(fittestGenome, stats, generationSave);
                 trainingGround.train();
             } else { // NO TRAINING
                 GameRules game  = new GameRules(fittestGenome, null);

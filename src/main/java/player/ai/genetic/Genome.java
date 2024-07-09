@@ -39,6 +39,14 @@ public class Genome {
         return this.populationID;
     }
 
+    public static int getGenomeLength() {
+        return genomeLength;
+    }
+
+    public byte[] getGenome() {
+        return this.genome;
+    }
+
 
 
     private byte[] generateRandomGenome() {
@@ -67,6 +75,20 @@ public class Genome {
             }
         }
         this.posScoreSecond = posScoreSecond;
+    }
+
+    public void mutate(int mutationRange, double mutationProbability) {
+        Random mutateRandom = new Random();
+        for (int i = 0; i < genomeLength * mutationProbability; i++) {
+            int genToBeMutated = mutateRandom.nextInt(genomeLength);
+            int mutation = mutateRandom.nextInt(2 * mutationRange) - mutationRange;
+            int currentGen = genome[genToBeMutated];
+
+            while (currentGen + mutation > Byte.MAX_VALUE || currentGen + mutation < Byte.MIN_VALUE) {
+                mutation = mutateRandom.nextInt(2 * mutationRange) - mutationRange;
+            }
+            genome[genToBeMutated] += mutation;
+        }
     }
 
 
