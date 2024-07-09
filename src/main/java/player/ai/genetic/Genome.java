@@ -8,12 +8,12 @@ public class Genome {
 
     private final static int genomeLength = 93;
 
-    private byte[] genome;
+    private final byte[] genome;
     private byte[][] posScoreFirst;
     private byte[][] posScoreSecond;
 
-    private static int populationSize = -1;
-    private int populationID;
+    private static int populationSize = 0;
+    private final int populationID;
 
 
 
@@ -134,9 +134,12 @@ public class Genome {
 
 
 
+    public String getEncodedGenome() {
+        return encodeGenome(this.genome);
+    }
+
     @Override
     public String toString() {
-        //TODO
-        return null;
+        return String.format("%s-id%d", encodeGenome(genome), populationID);
     }
 }

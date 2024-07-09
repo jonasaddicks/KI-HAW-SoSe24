@@ -15,6 +15,8 @@ public class Client {
 
         try {
             Genome fittestGenome = GenomeLoader.getLatestGenome(new File(ResourceLoadHelper.loadResource("genome.selection/fittestSelection")));
+
+
             //TODO debug
             System.out.printf("PosScore1:%n%s%n%nPosScore2:%n%s%n%nweightPos1: %d, weightPos2: %d%nweightMajor1: %d, weightMajor2: %d%nweightMinor1: %d, weightMinor2: %d%nweightWin1: %d, weightWin2: %d%nwin: %d%n%n",
                     Arrays.deepToString(fittestGenome.posScoreFirst()),
@@ -29,8 +31,10 @@ public class Client {
                     fittestGenome.winWeightOpponent(),
                     fittestGenome.winEvaluation());
 
+
             if (GameProperties.GAMEMODE == 3) { // TRAINING
-                TrainingGround.initTraining(fittestGenome);
+                TrainingGround trainingGround = new TrainingGround(fittestGenome);
+                trainingGround.train();
             } else { // NO TRAINING
                 GameRules game  = new GameRules(fittestGenome, null);
                 game.run();

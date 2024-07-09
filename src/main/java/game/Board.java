@@ -12,8 +12,8 @@ import static game.GameProperties.ROWS;
 public class Board {
     private static final Token BLANKSPACE = new Token(null, new String(Character.toChars(0x000026AB)), -1, -1);
 
-    private final String printSeparator;
-    private final String printBottom;
+    private static final String printSeparator;
+    private static final String printBottom;
 
     private final Token[][] board = new Token[ROWS][COLS];
     private Stack<Token> winningConditions = new Stack<>();
@@ -30,20 +30,14 @@ public class Board {
             {1, -1},    //diagonal down
     };
 
-    private final int winSectorRowsMin;
-    private final int winSectorRowsMax;
-    private final int winSectorColsMin;
-    private final int winSectorColsMax;
+    private static final int winSectorRowsMin;
+    private static final int winSectorRowsMax;
+    private static final int winSectorColsMin;
+    private static final int winSectorColsMax;
 
 
 
-    public Board() {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                board[i][j] = BLANKSPACE;
-            }
-        }
-
+    static {
         StringBuilder sb = new StringBuilder();
         sb.append("----");
         for(int i = 0; i < COLS; i++) {
@@ -82,6 +76,16 @@ public class Board {
         boolean sizeCols = COLS > 6;
         winSectorColsMin = sizeCols ? 3 : 2;
         winSectorColsMax = sizeCols ? COLS - 4 : 2;
+    }
+
+
+
+    public Board() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                board[i][j] = BLANKSPACE;
+            }
+        }
     }
 
     public Token[][] getBoard() {

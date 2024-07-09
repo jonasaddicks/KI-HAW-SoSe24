@@ -6,7 +6,6 @@ import player.Player;
 import player.PlayerProperty;
 import player.ai.genetic.Genome;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameRules {
@@ -69,42 +68,80 @@ public class GameRules {
 
 
     public Player run() {
-
-            int counter = 1;
-            player1.setBeginningPlayer(true);
-            player2.setBeginningPlayer(false);
-
-            while (!board.getIsGameFinished()) {
-
-                System.out.printf("Turn: %d%n", counter);
-                board.printBoard();
-
-                if (counter % 2 == 0) {
-                    System.out.printf("%s's turn%n%n", player2.getToken());
-                    if (!player2.makeMove()) {
-                        System.err.printf("Invalid move - try again%n%n");
-                        counter--;
-                    }
-                } else {
-                    System.out.printf("%s's turn%n%n", player1.getToken());
-                    if (!player1.makeMove()) {
-                        System.err.printf("Invalid move - try again%n%n");
-                        counter--;
-                    }
-                }
-                counter++;
-            }
-
-            board.printBoard();
-            Player winningPlayer;
-            System.out.printf("Game over - %s has won!%n%n", Objects.nonNull(winningPlayer = board.getHasWon()) ? board.getHasWon() : "no one");
-            this.resetGame();
-            return winningPlayer;
+        if (GameProperties.GAMEMODE == 3) {
+            return runTraining();
+        } else {
+            return runGame();
+        }
     }
+
+    private Player runTraining() {
+        int counter = 1;
+        player1.setBeginningPlayer(true);
+        player2.setBeginningPlayer(false);
+
+        while (!board.getIsGameFinished()) {
+
+            if (counter % 2 == 0) {
+                if (!player2.makeMove()) {
+                    counter--;
+                }
+            } else {
+                if (!player1.makeMove()) {
+                    counter--;
+                }
+            }
+            counter++;
+        }
+
+        return board.getHasWon();
+    }
+
+    private Player runGame() {
+        int counter = 1;
+        player1.setBeginningPlayer(true);
+        player2.setBeginningPlayer(false);
+
+        while (!board.getIsGameFinished()) {
+
+            System.out.printf("Turn: %d%n", counter);
+            board.printBoard();
+
+            if (counter % 2 == 0) {
+                System.out.printf("%s's turn%n%n", player2.getToken());
+                if (!player2.makeMove()) {
+                    System.err.printf("Invalid move - try again%n%n");
+                    counter--;
+                }
+            } else {
+                System.out.printf("%s's turn%n%n", player1.getToken());
+                if (!player1.makeMove()) {
+                    System.err.printf("Invalid move - try again%n%n");
+                    counter--;
+                }
+            }
+            counter++;
+        }
+
+        board.printBoard();
+        Player winningPlayer;
+        System.out.printf("Game over - %s has won!%n%n", Objects.nonNull(winningPlayer = board.getHasWon()) ? board.getHasWon() : "no one");
+        this.resetGame();
+        switchPlayers();
+        return winningPlayer;
+    }
+
+
 
     private void resetGame() {
         this.board.resetBoard();
         this.player1.clearTokens();
         this.player2.clearTokens();
+    }
+
+    private void switchPlayers() {
+        Player tempPlayer = player1;
+        player1 = player2;
+        player2 = tempPlayer;
     }
 }

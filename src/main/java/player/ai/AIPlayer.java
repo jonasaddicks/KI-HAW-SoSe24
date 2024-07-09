@@ -41,13 +41,10 @@ public class AIPlayer extends Player {
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                //TODO adjust depth
+                int value = minimax(3, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(TURN_ORDER[i]);
 
-                //TODO temp debug
-                System.out.printf("%d value: %d%n", TURN_ORDER[i], value);
-
-                //TODO >=
                 if (value >= score) {
                     if (value == score) {
                         if (new Random().nextInt(propabilityBound) == 0) {
