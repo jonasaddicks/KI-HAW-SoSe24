@@ -14,20 +14,36 @@ import static player.ai.genetic.TrainingProperties.*;
 
 public class TrainingGround {
 
+    private volatile boolean interruptFlag;
+
     private final File stats;
+    private final File fittestSelection;
     private final File generationSave;
+
+    private final Genome benchmark1;
+    private final Genome benchmark2;
 
     private List<GenomeFitness> population;
     private int generationNr;
 
 
-    public TrainingGround(Genome fittestGenome, File stats, File generationSave) {
+    public TrainingGround(Genome fittestGenome, File stats, File fittestSelection, File benchmarkSelection, File generationSave) {
+        this.interruptFlag = false;
+
         this.stats = stats;
+        this.fittestSelection = fittestSelection;
         this.generationSave = generationSave;
+
+        this.benchmark1 = GenomeLoader.getCompetingGenome1(benchmarkSelection);
+        this.benchmark2 = GenomeLoader.getCompetingGenome2(benchmarkSelection);
 
         this.population = new ArrayList<>();
         this.generationNr = getStartingGeneration() + 1;
         initTraining(fittestGenome);
+    }
+
+    public void flagInterrupt() {
+        this.interruptFlag = true;
     }
 
     public void train() {
@@ -36,36 +52,31 @@ public class TrainingGround {
 
     private void initTraining(Genome fittestGenome) {
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            this.population.add(new GenomeFitness(new Genome(fittestGenome)));
+            GenomeFitness newGenomeFitness = new GenomeFitness(new Genome(fittestGenome));
+            newGenomeFitness.gamesWon++;
+            newGenomeFitness.gamesLost++;
+            newGenomeFitness.gamesPlayed += 2;
+            this.population.add(newGenomeFitness);
         }
     }
 
     private void runTraining() {
         int maxGeneration = generationNr + NR_GENERATIONS;
-        for (int i = generationNr; i < maxGeneration; i++) {
-
-            evaluateFitness(); //simulated games
-            //TODO debug
-            for (GenomeFitness f : population) {
-                System.out.printf("%s - %f%n", f, f.getFitness());
-            }
-
-            //TODO save fittest
-            //TODO benchmark fittest
-            //TODO log fittest
-            System.out.printf("%ngen %d --- %s%n%n", this.generationNr, population.getFirst().genome.getEncodedGenome());
-//            if (stop) {
-//                generationNr++;
-//                break;
-//            }
+        for (int i = generationNr; !this.interruptFlag && i < maxGeneration; i++) {
 
             selectFirstStage(); //elitist
             selectSecondStage(); //tournament and crossover
-            mutate();
+            mutate(); //mutate over population
+            evaluateFitness(); //simulated games
+
+            saveFittest();
+            benchmarkFittest();
 
             setStartingGeneration();
             this.generationNr++;
         }
+        //TODO debug
+        System.out.println("cleaned up");
     }
 
 
@@ -149,7 +160,45 @@ public class TrainingGround {
     }
 
     private void benchmarkFittest() {
-        //TODO
+        Genome fittestGenome = population.getFirst().genome;
+        String benchmark1result = benchmarkGame(benchmark1);
+        String benchmark2result = benchmarkGame(benchmark2);
+
+        String log = String.format("%d | %s | %s | %s;",
+                generationNr,
+                fittestGenome.getEncodedGenome(),
+                benchmark1result,
+                benchmark2result
+        );
+        logFittest(log);
+    }
+
+    private String benchmarkGame(Genome opponent) {
+        Genome fittestGenome = population.getFirst().genome;
+
+        GameRules game = new GameRules(fittestGenome, opponent);
+        int played = 0, won = 0, lost = 0;
+
+        for (int i = 0; i < NR_BENCHMARK_GAMES; i++) {
+            AIPlayer hasWon = (AIPlayer) game.run();
+            played++;
+
+            if (Objects.nonNull(hasWon)) {
+                if (hasWon.getGenome().getPopulationID() == fittestGenome.getPopulationID()) {
+                    won++;
+                } else {
+                    lost++;
+                }
+            }
+            game.newGame();
+        }
+        return String.format("%d | %d | %d | %f | %f",
+                played,
+                won,
+                lost,
+                (double) won / (won + lost),
+                (double) (played - won - lost) / played
+        );
     }
 
 
@@ -170,7 +219,9 @@ public class TrainingGround {
         }
 
         private double getFitness() {
-            return (double) gamesWon / (double) (gamesLost + gamesWon);
+            double winRate = (double) gamesWon / (gamesWon + gamesLost);
+            double drawRate = (double) (gamesPlayed - gamesWon - gamesLost) / (double) gamesPlayed;
+            return winRate + drawRate / 2;
         }
 
         @Override
@@ -237,6 +288,24 @@ public class TrainingGround {
     private void setStartingGeneration() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(generationSave))) {
             writer.write(Integer.toString(this.generationNr));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveFittest() {
+        appendToFile(fittestSelection, population.getFirst().genome.getEncodedGenome());
+    }
+
+    private void logFittest(String log) {
+        System.out.printf("%s%n", log);
+        appendToFile(stats, log);
+    }
+
+    private void appendToFile(File file, String s) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.newLine();
+            writer.write(s);
         } catch (IOException e) {
             e.printStackTrace();
         }

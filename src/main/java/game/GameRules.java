@@ -133,6 +133,11 @@ public class GameRules {
 
 
 
+    public void newGame() {
+        resetGame();
+        switchPlayers();
+    }
+
     private void resetGame() {
         this.board.resetBoard();
         this.player1.clearTokens();

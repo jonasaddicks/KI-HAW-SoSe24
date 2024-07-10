@@ -35,10 +35,15 @@ public class Client {
 
 
             if (GameProperties.GAMEMODE == 3) { // TRAINING
-                File stats = Paths.get(ResourceLoadHelper.loadResource("evolutionary/stats/genStats")).toFile();
-                File generationSave = Paths.get(ResourceLoadHelper.loadResource("evolutionary/generation")).toFile();
 
-                TrainingGround trainingGround = new TrainingGround(fittestGenome, stats, generationSave);
+                File stats = new File("src\\main\\resources\\evolutionary\\stats\\genStats");
+                File fittestSelection = new File("src\\main\\resources\\evolutionary\\genome.selection\\fittestSelection");
+                File benchmarkSelection = Paths.get(ResourceLoadHelper.loadResource("evolutionary/genome.selection/benchmarkSelection")).toFile();
+                File generationSave = new File("src\\main\\resources\\evolutionary\\generation");
+
+                TrainingGround trainingGround = new TrainingGround(fittestGenome, stats, fittestSelection, benchmarkSelection, generationSave);
+                TrainingSupervisor supervisor = new TrainingSupervisor(trainingGround);
+                supervisor.start();
                 trainingGround.train();
             } else { // NO TRAINING
                 GameRules game  = new GameRules(fittestGenome, null);
