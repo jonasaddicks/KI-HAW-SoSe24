@@ -221,7 +221,8 @@ public class TrainingGround {
         private double getFitness() {
             double winRate = (double) gamesWon / (gamesWon + gamesLost);
             double drawRate = (double) (gamesPlayed - gamesWon - gamesLost) / (double) gamesPlayed;
-            return winRate + drawRate / 2;
+            int fitness = (int) ((winRate + drawRate / 2) * 1000);
+            return fitness / 1000d;
         }
 
         @Override

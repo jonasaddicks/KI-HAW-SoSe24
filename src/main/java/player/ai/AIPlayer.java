@@ -13,8 +13,7 @@ public class AIPlayer extends Player {
     private static final int[] TURN_ORDER = new int[]{4, 5, 6, 7, 1, 2, 3};
 
     private Genome genome;
-    private byte[][] posScoreFirst;
-    private byte[][] posScoreSecond;
+    private byte[][] posScore;
 
     public AIPlayer(PlayerProperty playerProperty, Board board, boolean beginningPlayer, Genome genome) {
         super(playerProperty, board, beginningPlayer);
@@ -41,15 +40,14 @@ public class AIPlayer extends Player {
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                //TODO adjust depth
-                int value = minimax(3, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int value = minimax(6, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(TURN_ORDER[i]);
 
                 if (value >= score) {
                     if (value == score) {
                         if (new Random().nextInt(propabilityBound) == 0) {
                             bestMove = TURN_ORDER[i];
-                            propabilityBound ++;
+                            propabilityBound++;
                         }
                     } else {
                         bestMove = TURN_ORDER[i];
@@ -100,8 +98,7 @@ public class AIPlayer extends Player {
 
 
     private int evaluateBoard() {
-        this.posScoreFirst = genome.posScoreFirst();
-        this.posScoreSecond = genome.posScoreSecond();
+        this.posScore = genome.posScore();
 
         int evaluationScore = 0;
 
@@ -123,11 +120,7 @@ public class AIPlayer extends Player {
     }
 
     private int evalPosScore(Player player) {
-        if (this.isBeginningPlayer()) {
-            return player.getPlayersTokens().map(t -> posScoreFirst[t.row][t.col]).mapToInt(Byte::intValue).sum();
-        } else {
-            return player.getPlayersTokens().map(t -> posScoreSecond[t.row][t.col]).mapToInt(Byte::intValue).sum();
-        }
+        return player.getPlayersTokens().map(t -> posScore[t.row][t.col]).mapToInt(Byte::intValue).sum();
     }
 
     private int evalGameWon(Player player) {

@@ -6,11 +6,10 @@ import java.util.Random;
 
 public class Genome {
 
-    private final static int genomeLength = 93;
+    private final static int genomeLength = 51;
 
     private final byte[] genome;
     private byte[][] posScoreFirst;
-    private byte[][] posScoreSecond;
 
     private static int populationSize = 0;
     private final int populationID;
@@ -66,15 +65,6 @@ public class Genome {
             }
         }
         this.posScoreFirst = posScoreFirst;
-
-        byte[][] posScoreSecond = new byte[6][7];
-        for (byte i = 0; i < posScoreSecond.length; i++) {
-            for (byte j = 0; j < posScoreSecond[i].length; j++) {
-                posScoreSecond[i][j] = genome[counter];
-                counter++;
-            }
-        }
-        this.posScoreSecond = posScoreSecond;
     }
 
     public void mutate(int mutationRange, double mutationProbability) {
@@ -89,6 +79,7 @@ public class Genome {
             }
             genome[genToBeMutated] += mutation;
         }
+        updatePosScore();
     }
 
 
@@ -126,15 +117,11 @@ public class Genome {
     }
 
     public byte winEvaluation() {
-        return genome[92];
+        return genome[50];
     }
 
-    public byte[][] posScoreFirst() {
+    public byte[][] posScore() {
         return this.posScoreFirst;
-    }
-
-    public byte[][] posScoreSecond() {
-        return this.posScoreSecond;
     }
 
 

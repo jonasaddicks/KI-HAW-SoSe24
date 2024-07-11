@@ -8,7 +8,6 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Client {
     public static void main(String[] args) {
@@ -21,7 +20,7 @@ public class Client {
 
             //TODO debug
             System.out.printf("PosScore1:%n%s%n%nPosScore2:%n%s%n%nweightPos1: %d, weightPos2: %d%nweightMajor1: %d, weightMajor2: %d%nweightMinor1: %d, weightMinor2: %d%nweightWin1: %d, weightWin2: %d%nwin: %d%n%n",
-                    Arrays.deepToString(fittestGenome.posScoreFirst()),
+                    Arrays.deepToString(fittestGenome.posScore()),
                     Arrays.deepToString(fittestGenome.posScoreSecond()),
                     fittestGenome.posScoreWeightPlayer(),
                     fittestGenome.posScoreWeightOpponent(),
