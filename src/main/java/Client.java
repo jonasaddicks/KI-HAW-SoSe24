@@ -16,24 +16,15 @@ public class Client {
 
         try {
             Genome fittestGenome = GenomeLoader.getLatestGenome(new File(ResourceLoadHelper.loadResource("evolutionary/genome.selection/fittestSelection")));
+            File aiVsAi = new File(ResourceLoadHelper.loadResource("evolutionary/genome.selection/aiVsAiSelection"));
+            Genome genom1 = GenomeLoader.getCompetingGenome1(aiVsAi);
+            Genome genom2 = GenomeLoader.getCompetingGenome2(aiVsAi);
 
-
-            //TODO debug
-            System.out.printf("PosScore1:%n%s%n%nPosScore2:%n%s%n%nweightPos1: %d, weightPos2: %d%nweightMajor1: %d, weightMajor2: %d%nweightMinor1: %d, weightMinor2: %d%nweightWin1: %d, weightWin2: %d%nwin: %d%n%n",
-                    Arrays.deepToString(fittestGenome.posScore()),
-                    Arrays.deepToString(fittestGenome.posScoreSecond()),
-                    fittestGenome.posScoreWeightPlayer(),
-                    fittestGenome.posScoreWeightOpponent(),
-                    fittestGenome.majorWeightPlayer(),
-                    fittestGenome.majorWeightOpponent(),
-                    fittestGenome.minorWeightPlayer(),
-                    fittestGenome.minorWeightOpponent(),
-                    fittestGenome.winWeightPlayer(),
-                    fittestGenome.winWeightOpponent(),
-                    fittestGenome.winEvaluation());
 
 
             if (GameProperties.GAMEMODE == 3) { // TRAINING
+
+                fittestGenome.printGenome();
 
                 File stats = new File("src\\main\\resources\\evolutionary\\stats\\genStats");
                 File fittestSelection = new File("src\\main\\resources\\evolutionary\\genome.selection\\fittestSelection");
@@ -45,7 +36,8 @@ public class Client {
                 supervisor.start();
                 trainingGround.train();
             } else { // NO TRAINING
-                GameRules game  = new GameRules(fittestGenome, null);
+
+                GameRules game  = new GameRules(genom1, genom2);
                 game.run();
             }
         } catch (URISyntaxException e) {

@@ -40,7 +40,7 @@ public class AIPlayer extends Player {
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                int value = minimax(6, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int value = minimax(4, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(TURN_ORDER[i]);
 
                 if (value >= score) {
@@ -105,11 +105,11 @@ public class AIPlayer extends Player {
         evaluationScore += evalPosScore(this) * genome.posScoreWeightPlayer();
         evaluationScore += evalPosScore(this.getOpponent()) * genome.posScoreWeightOpponent();
 
-        evaluationScore += evalMajorThreats(this) * genome.majorWeightPlayer();
-        evaluationScore += evalMajorThreats(this.getOpponent()) * genome.majorWeightOpponent();
+        //evaluationScore += evalMajorThreats(this) * genome.majorWeightPlayer();
+        //evaluationScore += evalMajorThreats(this.getOpponent()) * genome.majorWeightOpponent();
 
-        evaluationScore += evalMinorThreats(this) * genome.minorWeightPlayer();
-        evaluationScore += evalMinorThreats(this.getOpponent()) * genome.minorWeightOpponent();
+        //evaluationScore += evalMinorThreats(this) * genome.minorWeightPlayer();
+        //evaluationScore += evalMinorThreats(this.getOpponent()) * genome.minorWeightOpponent();
 
         if (board.getIsGameFinished() && Objects.nonNull(board.getHasWon())) {
             evaluationScore += evalGameWon(this) * genome.winWeightPlayer();

@@ -85,11 +85,13 @@ public class Genome {
 
 
     public byte posScoreWeightPlayer() {
-        return genome[0];
+        return 1;
+//        return genome[0];
     }
 
     public byte posScoreWeightOpponent() {
-        return genome[1];
+        return -1;
+//        return genome[1];
     }
 
     public byte majorWeightPlayer() {
@@ -109,15 +111,18 @@ public class Genome {
     }
 
     public byte winWeightPlayer() {
-        return genome[6];
+        return 100;
+//        return genome[6];
     }
 
     public byte winWeightOpponent() {
-        return genome[7];
+        return -100;
+//        return genome[7];
     }
 
     public byte winEvaluation() {
-        return genome[50];
+        return 100;
+//        return genome[50];
     }
 
     public byte[][] posScore() {
@@ -150,5 +155,19 @@ public class Genome {
     @Override
     public String toString() {
         return String.format("%s-id%d", encodeGenome(genome), populationID);
+    }
+
+    public void printGenome() {
+        System.out.printf("PosScore1:%n%s%n%nweightPos1: %d, weightPos2: %d%nweightMajor1: %d, weightMajor2: %d%nweightMinor1: %d, weightMinor2: %d%nweightWin1: %d, weightWin2: %d%nwin: %d%n%n",
+                Arrays.deepToString(this.posScore()),
+                this.posScoreWeightPlayer(),
+                this.posScoreWeightOpponent(),
+                this.majorWeightPlayer(),
+                this.majorWeightOpponent(),
+                this.minorWeightPlayer(),
+                this.minorWeightOpponent(),
+                this.winWeightPlayer(),
+                this.winWeightOpponent(),
+                this.winEvaluation());
     }
 }

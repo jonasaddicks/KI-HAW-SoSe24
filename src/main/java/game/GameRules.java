@@ -48,13 +48,21 @@ public class GameRules {
             case 2 : { //AIONLY
                 if (GameProperties.PLAYER1_STARTS) {
                     player1 = new AIPlayer(PlayerProperty.PLAYER1, board, true, genome1);
-                    player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, genome1);
+                    player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, genome2);
                     player1.setOpponent(player2);
                 } else {
-                    player2 = new AIPlayer(PlayerProperty.PLAYER1, board, false, genome1);
+                    player2 = new AIPlayer(PlayerProperty.PLAYER1, board, false, genome2);
                     player1 = new AIPlayer(PlayerProperty.PLAYER2, board, player2, true, genome1);
                     player2.setOpponent(player1);
                 }
+
+                System.out.printf("Player %s uses genome:%n", player1.getToken());
+                AIPlayer aiPlayer1 = (AIPlayer) player1;
+                aiPlayer1.getGenome().printGenome();
+
+                System.out.printf("Player %s uses genome:%n", player2.getToken());
+                AIPlayer aiPlayer2 = (AIPlayer) player2;
+                aiPlayer2.getGenome().printGenome();
                 break;
             }
             case 3 : { //TRAIN
