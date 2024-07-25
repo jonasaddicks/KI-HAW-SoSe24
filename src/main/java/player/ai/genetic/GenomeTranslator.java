@@ -15,8 +15,7 @@ public class GenomeTranslator {
 
                 100
         };
-        String genomeString = "+voB9QrrF/zg8AID/usBBAT94f4K9+b9BQMJ8fIJCPYHEQ8LAvb5Eerz7/wG9f/2Cvbw";
-
+        String genomeString = "/fH+9v0G9Avy9vkD++T07PkA/AcB8/n7/AwE+fDvBv0H+wYH+en4A/X0+/707fXw8/Tj";
 
         Genome genome = new Genome(Genome.decodeGenome(genomeString));
 

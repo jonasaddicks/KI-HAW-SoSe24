@@ -14,6 +14,7 @@ public class TrainingProperties {
 -> minmax depth : 0
 -> major and minor threats ignored
 -> fixed win evaluation
+-> posScore 1/-1
 
 
 1 | BwD+AAn4CQEAAPgGAAQO9gIEAQAAAAAAAQP7AAAAAAD6BAj7BwEPBgD9AAUAAAD9AAAH | 300 | 276 | 24 | 0,920000 | 0,000000 | 300 | 68 | 232 | 0,226667 | 0,000000;

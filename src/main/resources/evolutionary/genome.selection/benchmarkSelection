@@ -1,5 +1,7 @@
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAACvYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABk
 Af8AAAAACvYDBAUHBQQDBAYICggGBAUICw0LCAUFCAsNCwgFBAYICggGBAMEBQcFBANk
 
-1 - weights victory only
-2 - weights victory and prefers central position for both players
+1 - no weights
+2 - weights victory only
+3 - weights victory and prefers central position for both players

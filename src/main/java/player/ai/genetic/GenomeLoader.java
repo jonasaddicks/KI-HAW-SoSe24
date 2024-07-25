@@ -57,6 +57,10 @@ public class GenomeLoader {
         return getCompetingGenomeNr(file, 1);
     }
 
+    public static Genome getCompetingGenome3(File file) {
+        return getCompetingGenomeNr(file, 2);
+    }
+
     private static Genome getCompetingGenomeNr(File file, int nr) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;

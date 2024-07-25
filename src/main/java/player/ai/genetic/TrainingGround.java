@@ -22,6 +22,7 @@ public class TrainingGround {
 
     private final Genome benchmark1;
     private final Genome benchmark2;
+    private final Genome benchmark3;
 
     private List<GenomeFitness> population;
     private int generationNr;
@@ -36,6 +37,7 @@ public class TrainingGround {
 
         this.benchmark1 = GenomeLoader.getCompetingGenome1(benchmarkSelection);
         this.benchmark2 = GenomeLoader.getCompetingGenome2(benchmarkSelection);
+        this.benchmark3 = GenomeLoader.getCompetingGenome3(benchmarkSelection);
 
         this.population = new ArrayList<>();
         this.generationNr = getStartingGeneration() + 1;
@@ -163,12 +165,14 @@ public class TrainingGround {
         Genome fittestGenome = population.getFirst().genome;
         String benchmark1result = benchmarkGame(benchmark1);
         String benchmark2result = benchmarkGame(benchmark2);
+        String benchmark3result = benchmarkGame(benchmark3);
 
-        String log = String.format("%d | %s | %s | %s;",
+        String log = String.format("%d | %s | %s | %s | %s;",
                 generationNr,
                 fittestGenome.getEncodedGenome(),
                 benchmark1result,
-                benchmark2result
+                benchmark2result,
+                benchmark3result
         );
         logFittest(log);
     }

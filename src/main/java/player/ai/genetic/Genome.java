@@ -46,6 +46,13 @@ public class Genome {
         return this.genome;
     }
 
+    public boolean isNullGenome() {
+        for (int i = 0; i < this.genome.length; i++) {
+            if (this.genome[i] != 0) {return false;}
+        }
+        return true;
+    }
+
 
 
     private byte[] generateRandomGenome() {
