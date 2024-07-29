@@ -254,6 +254,8 @@ public class TrainingGround {
         public void run() {
             for (int i = 1; i <= NR_FITNESS_GAMES; i++) {
                 GenomeFitness competingGenome = population.get(new Random().nextInt(population.size()));
+                //GenomeFitness competingGenome = new GenomeFitness(benchmark3);
+
 
                 GameRules game;
                 if (i % 2 == 0) {
