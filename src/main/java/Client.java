@@ -11,7 +11,6 @@ import java.util.Arrays;
 
 public class Client {
     public static void main(String[] args) {
-        //TODO debug
         double timeStampStart = (double) System.currentTimeMillis() / 1000;
 
         try {
@@ -44,7 +43,6 @@ public class Client {
             e.printStackTrace();
         }
 
-        //TODO debug
         double timeStampEnd = (double) System.currentTimeMillis() / 1000;
         System.out.printf("%fs", timeStampEnd - timeStampStart);
     }

@@ -8,26 +8,11 @@ public class Genome {
 
     private final static int genomeLength = 51;
 
-    //TODO
-    private static final byte[][] posScore;
     private final byte[] genome;
     private byte[][] posScoreFirst;
 
     private static int populationSize = 0;
     private final int populationID;
-
-    //TODO
-    static {
-        posScore = new byte[][]
-                {
-                {-24, -15, 3, 8, 1, -11, -20},
-                {-13, -15, 8, 13, 12, -21, -11},
-                {-4, -7, 15, 15, 11, -2, -4},
-                {8, 4, 17, 24, 22, 2, 6},
-                {0, -9, -3, 4, 2, -6, -9},
-                {-9, -13, 4, 13, -1, -14, -21},
-        };
-    }
 
 
 
@@ -143,9 +128,7 @@ public class Genome {
     }
 
     public byte[][] posScore() {
-        //TODO
-        return this.posScore;
-//        return this.posScoreFirst;
+        return this.posScoreFirst;
     }
 
 

@@ -43,6 +43,7 @@ public class GameRules {
                     player1 = new AIPlayer(PlayerProperty.PLAYER2, board, player2, true, genome1);
                     player2.setOpponent(player1);
                 }
+                genome1.printGenome();
                 break;
             }
             case 2 : { //AIONLY

@@ -40,7 +40,7 @@ public class AIPlayer extends Player {
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                int value = minimax(3, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.removeToken(TURN_ORDER[i]);
 
                 if (value >= score) {

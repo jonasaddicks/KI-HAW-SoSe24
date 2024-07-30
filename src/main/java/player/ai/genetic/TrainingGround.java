@@ -77,8 +77,6 @@ public class TrainingGround {
             setStartingGeneration();
             this.generationNr++;
         }
-        //TODO debug
-        System.out.println("cleaned up");
     }
 
 
