@@ -1,0 +1,49 @@
+player1: Af8AAAAACvYDBAUHBQQDBAYICggGBAUICw0LCAUFCAsNCwgFBAYICggGBAMEBQcFBANk
+player2: Af8B/wH/ZJwDBAUHBQQDBAYICggGBAUICw0LCAUFCAsNCwgFBAYICggGBAMEBQcFBANk
+
+depth 7
+
+Game 1 ----- player1: 0 won, 1 lost, 0,000000 wr ----- player2: 1 won, 0 lost, 1,000000 wr ----- 0,000000 dr
+Game 2 ----- player1: 0 won, 2 lost, 0,000000 wr ----- player2: 2 won, 0 lost, 1,000000 wr ----- 0,000000 dr
+Game 3 ----- player1: 0 won, 3 lost, 0,000000 wr ----- player2: 3 won, 0 lost, 1,000000 wr ----- 0,000000 dr
+Game 4 ----- player1: 0 won, 4 lost, 0,000000 wr ----- player2: 4 won, 0 lost, 1,000000 wr ----- 0,000000 dr
+Game 5 ----- player1: 0 won, 5 lost, 0,000000 wr ----- player2: 5 won, 0 lost, 1,000000 wr ----- 0,000000 dr
+Game 6 ----- player1: 1 won, 5 lost, 0,166667 wr ----- player2: 5 won, 1 lost, 0,833333 wr ----- 0,000000 dr
+Game 7 ----- player1: 1 won, 6 lost, 0,142857 wr ----- player2: 6 won, 1 lost, 0,857143 wr ----- 0,000000 dr
+Game 8 ----- player1: 1 won, 6 lost, 0,142857 wr ----- player2: 6 won, 1 lost, 0,857143 wr ----- 0,125000 dr
+Game 9 ----- player1: 1 won, 7 lost, 0,125000 wr ----- player2: 7 won, 1 lost, 0,875000 wr ----- 0,111111 dr
+Game 10 ----- player1: 1 won, 8 lost, 0,111111 wr ----- player2: 8 won, 1 lost, 0,888889 wr ----- 0,100000 dr
+Game 11 ----- player1: 1 won, 9 lost, 0,100000 wr ----- player2: 9 won, 1 lost, 0,900000 wr ----- 0,090909 dr
+Game 12 ----- player1: 1 won, 10 lost, 0,090909 wr ----- player2: 10 won, 1 lost, 0,909091 wr ----- 0,083333 dr
+Game 13 ----- player1: 1 won, 10 lost, 0,090909 wr ----- player2: 10 won, 1 lost, 0,909091 wr ----- 0,153846 dr
+Game 14 ----- player1: 1 won, 11 lost, 0,083333 wr ----- player2: 11 won, 1 lost, 0,916667 wr ----- 0,142857 dr
+Game 15 ----- player1: 1 won, 12 lost, 0,076923 wr ----- player2: 12 won, 1 lost, 0,923077 wr ----- 0,133333 dr
+Game 16 ----- player1: 1 won, 13 lost, 0,071429 wr ----- player2: 13 won, 1 lost, 0,928571 wr ----- 0,125000 dr
+Game 17 ----- player1: 1 won, 14 lost, 0,066667 wr ----- player2: 14 won, 1 lost, 0,933333 wr ----- 0,117647 dr
+Game 18 ----- player1: 1 won, 15 lost, 0,062500 wr ----- player2: 15 won, 1 lost, 0,937500 wr ----- 0,111111 dr
+Game 19 ----- player1: 1 won, 16 lost, 0,058824 wr ----- player2: 16 won, 1 lost, 0,941176 wr ----- 0,105263 dr
+Game 20 ----- player1: 1 won, 17 lost, 0,055556 wr ----- player2: 17 won, 1 lost, 0,944444 wr ----- 0,100000 dr
+Game 21 ----- player1: 1 won, 18 lost, 0,052632 wr ----- player2: 18 won, 1 lost, 0,947368 wr ----- 0,095238 dr
+Game 22 ----- player1: 1 won, 19 lost, 0,050000 wr ----- player2: 19 won, 1 lost, 0,950000 wr ----- 0,090909 dr
+Game 23 ----- player1: 1 won, 20 lost, 0,047619 wr ----- player2: 20 won, 1 lost, 0,952381 wr ----- 0,086957 dr
+Game 24 ----- player1: 1 won, 21 lost, 0,045455 wr ----- player2: 21 won, 1 lost, 0,954545 wr ----- 0,083333 dr
+Game 25 ----- player1: 1 won, 22 lost, 0,043478 wr ----- player2: 22 won, 1 lost, 0,956522 wr ----- 0,080000 dr
+Game 26 ----- player1: 1 won, 23 lost, 0,041667 wr ----- player2: 23 won, 1 lost, 0,958333 wr ----- 0,076923 dr
+Game 27 ----- player1: 1 won, 24 lost, 0,040000 wr ----- player2: 24 won, 1 lost, 0,960000 wr ----- 0,074074 dr
+Game 28 ----- player1: 1 won, 25 lost, 0,038462 wr ----- player2: 25 won, 1 lost, 0,961538 wr ----- 0,071429 dr
+Game 29 ----- player1: 1 won, 26 lost, 0,037037 wr ----- player2: 26 won, 1 lost, 0,962963 wr ----- 0,068966 dr
+Game 30 ----- player1: 2 won, 26 lost, 0,071429 wr ----- player2: 26 won, 2 lost, 0,928571 wr ----- 0,066667 dr
+Game 31 ----- player1: 2 won, 27 lost, 0,068966 wr ----- player2: 27 won, 2 lost, 0,931034 wr ----- 0,064516 dr
+Game 32 ----- player1: 2 won, 28 lost, 0,066667 wr ----- player2: 28 won, 2 lost, 0,933333 wr ----- 0,062500 dr
+Game 33 ----- player1: 2 won, 29 lost, 0,064516 wr ----- player2: 29 won, 2 lost, 0,935484 wr ----- 0,060606 dr
+Game 34 ----- player1: 2 won, 30 lost, 0,062500 wr ----- player2: 30 won, 2 lost, 0,937500 wr ----- 0,058824 dr
+Game 35 ----- player1: 2 won, 31 lost, 0,060606 wr ----- player2: 31 won, 2 lost, 0,939394 wr ----- 0,057143 dr
+Game 36 ----- player1: 2 won, 32 lost, 0,058824 wr ----- player2: 32 won, 2 lost, 0,941176 wr ----- 0,055556 dr
+Game 37 ----- player1: 2 won, 33 lost, 0,057143 wr ----- player2: 33 won, 2 lost, 0,942857 wr ----- 0,054054 dr
+Game 38 ----- player1: 2 won, 34 lost, 0,055556 wr ----- player2: 34 won, 2 lost, 0,944444 wr ----- 0,052632 dr
+Game 39 ----- player1: 2 won, 34 lost, 0,055556 wr ----- player2: 34 won, 2 lost, 0,944444 wr ----- 0,076923 dr
+Game 40 ----- player1: 2 won, 35 lost, 0,054054 wr ----- player2: 35 won, 2 lost, 0,945946 wr ----- 0,075000 dr
+Game 41 ----- player1: 2 won, 36 lost, 0,052632 wr ----- player2: 36 won, 2 lost, 0,947368 wr ----- 0,073171 dr
+Game 42 ----- player1: 2 won, 37 lost, 0,051282 wr ----- player2: 37 won, 2 lost, 0,948718 wr ----- 0,071429 dr
+Game 43 ----- player1: 2 won, 37 lost, 0,051282 wr ----- player2: 37 won, 2 lost, 0,948718 wr ----- 0,093023 dr
+Game 44 ----- player1: 2 won, 38 lost, 0,050000 wr ----- player2: 38 won, 2 lost, 0,950000 wr ----- 0,090909 dr

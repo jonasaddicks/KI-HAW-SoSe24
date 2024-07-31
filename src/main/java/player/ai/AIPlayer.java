@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class AIPlayer extends Player {
 
-    private static final int[] TURN_ORDER = new int[]{4, 5, 6, 7, 1, 2, 3};
+    private static final int[] TURN_ORDER = new int[]{4, 5, 3, 6, 2, 7, 1};
 
     private Genome genome;
     private byte[][] posScore;
@@ -34,13 +34,15 @@ public class AIPlayer extends Player {
     }
 
     private int calculateMove() {
+        double timeStampStart = (double) System.currentTimeMillis() / 1000;
+
         int bestMove = -1;
         int score = Integer.MIN_VALUE;
         int propabilityBound = 2;
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int value = minimax(6, false, Integer.MIN_VALUE, Integer.MAX_VALUE); //depth of the tree = depth + 1
                 board.removeToken(TURN_ORDER[i]);
 
                 if (value >= score) {
@@ -56,6 +58,8 @@ public class AIPlayer extends Player {
                 }
             }
         }
+        double timeStampEnd = (double) System.currentTimeMillis() / 1000;
+        System.out.printf("%fs for move%n", timeStampEnd - timeStampStart);
         return bestMove;
     }
 

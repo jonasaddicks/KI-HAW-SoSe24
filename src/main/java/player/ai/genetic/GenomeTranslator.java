@@ -4,20 +4,20 @@ public class GenomeTranslator {
     public static void main(String[] args) {
 
         byte[] genomeArray = new byte[]{
-                1, -2, 12, -19, 11, -9, 31, -26,
+                1, -1, 1, -1, 1, -1, 100, -100,
 
-                -24, -15, 3, 8, 1, -11, -20,
-                -13, -15, 8, 13, 12, -21, -11,
-                -4, -7, 15, 15, 11, -2, -4,
-                8, 4, 17, 24, 22, 2, 6,
-                0, -9, -3, 4, 2, -6, -9,
-                -9, -13, 4, 13, -1, -14, -21,
+                3, 4, 5, 7, 5, 4, 3,
+                4, 6, 8, 10, 8, 6, 4,
+                5, 8, 11, 13, 11, 8, 5,
+                5, 8, 11, 13, 11, 8, 5,
+                4, 6, 8, 10, 8, 6, 4,
+                3, 4, 5, 7, 5, 4, 3,
 
-                50
+                100
         };
-        String genomeString = "AfwM7Qv3H+bo8QMIAfXs8/EIDQzr9fz5Dw8L/vwIBBEYFgIGAPf9BAL69/fzBA3/8usy";
+        String genomeString = "Af4M7Qv3H+b0/vLW9vMADBIBCAH9Ag79BPoI+wny/gb//AML9wf0AgX7/gL/9Af8//8F";
 
-        Genome genome = new Genome(genomeArray);
+        Genome genome = new Genome(Genome.decodeGenome(genomeString));
 
         genome.printGenome();
         System.out.println(genome.getEncodedGenome());

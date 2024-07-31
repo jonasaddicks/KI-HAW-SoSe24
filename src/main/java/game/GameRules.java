@@ -33,7 +33,7 @@ public class GameRules {
                 }
                 break;
             }
-            case 1 : { //SINGLE PLAYER
+            case 1, 5 : { //SINGLE PLAYER
                 if (GameProperties.PLAYER1_STARTS) {
                     player1 = new HumanPlayer(PlayerProperty.PLAYER1, board, true);
                     player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, genome1);
@@ -46,7 +46,7 @@ public class GameRules {
                 genome1.printGenome();
                 break;
             }
-            case 2 : { //AIONLY
+            case 2, 4 : { //AIONLY
                 if (GameProperties.PLAYER1_STARTS) {
                     player1 = new AIPlayer(PlayerProperty.PLAYER1, board, true, genome1);
                     player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, genome2);
