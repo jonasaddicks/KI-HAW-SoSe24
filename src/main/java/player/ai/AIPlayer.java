@@ -34,7 +34,6 @@ public class AIPlayer extends Player {
     }
 
     private int calculateMove() {
-        double timeStampStart = (double) System.currentTimeMillis() / 1000;
 
         int bestMove = -1;
         int score = Integer.MIN_VALUE;
@@ -42,7 +41,7 @@ public class AIPlayer extends Player {
 
         for (int i = 0; i < TURN_ORDER.length; i++) {
             if (board.placeToken(TURN_ORDER[i], this)) {
-                int value = minimax(6, false, Integer.MIN_VALUE, Integer.MAX_VALUE); //depth of the tree = depth + 1
+                int value = minimax(8, false, Integer.MIN_VALUE, Integer.MAX_VALUE); //depth of the tree = depth + 1
                 board.removeToken(TURN_ORDER[i]);
 
                 if (value >= score) {
@@ -58,8 +57,7 @@ public class AIPlayer extends Player {
                 }
             }
         }
-        double timeStampEnd = (double) System.currentTimeMillis() / 1000;
-        System.out.printf("%fs for move%n", timeStampEnd - timeStampStart);
+
         return bestMove;
     }
 

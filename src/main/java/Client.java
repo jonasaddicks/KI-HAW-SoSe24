@@ -90,6 +90,8 @@ public class Client {
 
         for (int i = 1; i <= GameProperties.NR_BENCHMARK_GAMES; i++) {
 
+            System.out.printf("Round %d: %n", i);
+
             Player hasWon = game.run();
             if (Objects.nonNull(hasWon)) {
                 if (hasWon.getID() == 1) {

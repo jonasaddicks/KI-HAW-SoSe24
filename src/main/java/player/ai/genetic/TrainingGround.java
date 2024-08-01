@@ -67,7 +67,7 @@ public class TrainingGround {
         for (int i = generationNr; !this.interruptFlag && i < maxGeneration; i++) {
 
             selectFirstStage(); //elitist
-            selectSecondStage(); //tournament and crossover
+            crossover(); //tournament and crossover
             mutate(); //mutate over population
             evaluateFitness(); //simulated games
 
@@ -106,7 +106,7 @@ public class TrainingGround {
         }
     }
 
-    private void selectSecondStage() {
+    private void crossover() {
         List<GenomeFitness> newPopulation = new ArrayList<>();
         for (int i = 0; i < POPULATION_SIZE * ELITIST_SHARE; i++) {
             newPopulation.add(new GenomeFitness(population.get(i).genome));
