@@ -11,7 +11,7 @@ public class TrainingProperties {
     public static final double GEN_MUTATION_PROBABILITY = 0.1;
     public static final int MUTATION_RANGE = 10;
 }
--> minmax depth : 0
+-> minimax depth : 0
 -> major and minor threats ignored
 -> fixed win evaluation
 -> posScore 1/-1
