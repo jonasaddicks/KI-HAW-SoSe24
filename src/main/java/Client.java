@@ -1,7 +1,6 @@
 import game.GameProperties;
 import game.GameRules;
 import player.Player;
-import player.ai.AIPlayer;
 import player.ai.genetic.Genome;
 import player.ai.genetic.GenomeLoader;
 import player.ai.genetic.TrainingGround;
@@ -12,10 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Objects;
-
-import static player.ai.genetic.TrainingProperties.NR_BENCHMARK_GAMES;
 
 public class Client {
     public static void main(String[] args) {
@@ -24,19 +20,19 @@ public class Client {
         try {
             Genome fittestGenome = GenomeLoader.getLatestGenome(new File(ResourceLoadHelper.loadResource("evolutionary/genome.selection/fittestSelection")));
             File aiVsAi = new File(ResourceLoadHelper.loadResource("evolutionary/genome.selection/aiVsAiSelection"));
-            Genome genom1 = GenomeLoader.getCompetingGenome1(aiVsAi);
-            Genome genom2 = GenomeLoader.getCompetingGenome2(aiVsAi);
+            Genome genome1 = GenomeLoader.getCompetingGenome1(aiVsAi);
+            Genome genome2 = GenomeLoader.getCompetingGenome2(aiVsAi);
 
 
 
-            if (GameProperties.GAMEMODE == 3) { // TRAINING
+            if (GameProperties.GAME_MODE == 3) { // TRAINING
 
                 fittestGenome.printGenome();
 
-                File stats = new File("src\\main\\resources\\evolutionary\\stats\\genStats");
-                File fittestSelection = new File("src\\main\\resources\\evolutionary\\genome.selection\\fittestSelection");
+                File stats = Paths.get(ResourceLoadHelper.loadResource("evolutionary/stats/genStats")).toFile();
+                File fittestSelection = Paths.get(ResourceLoadHelper.loadResource("evolutionary/genome.selection/fittestSelection")).toFile();
                 File benchmarkSelection = Paths.get(ResourceLoadHelper.loadResource("evolutionary/genome.selection/benchmarkSelection")).toFile();
-                File generationSave = new File("src\\main\\resources\\evolutionary\\generation");
+                File generationSave = Paths.get(ResourceLoadHelper.loadResource("evolutionary/generation")).toFile();
 
                 TrainingGround trainingGround = new TrainingGround(fittestGenome, stats, fittestSelection, benchmarkSelection, generationSave);
                 TrainingSupervisor supervisor = new TrainingSupervisor(trainingGround);
@@ -44,28 +40,28 @@ public class Client {
                 trainingGround.train();
             } else { // NO TRAINING
 
-                GameRules game  = new GameRules(genom1, genom2);
+                GameRules game  = new GameRules(genome1, genome2);
 
-                if (GameProperties.GAMEMODE == 4 || GameProperties.GAMEMODE == 5) {
-                    File stats = new File("src\\main\\resources\\aiBenchmark\\stats\\stats");
+                if (GameProperties.GAME_MODE == 4 || GameProperties.GAME_MODE == 5) {
+                    File stats = Paths.get(ResourceLoadHelper.loadResource("aiBenchmark/stats/stats")).toFile();
 
                     if (GameProperties.PLAYER1_STARTS) {
 
-                        if (GameProperties.GAMEMODE == 4) {
-                            appendToFile(stats, String.format("player1: %s", genom1.getEncodedGenome()));
-                            appendToFile(stats, String.format("player2: %s%n", genom2.getEncodedGenome()));
+                        if (GameProperties.GAME_MODE == 4) {
+                            appendToFile(stats, String.format("player1: %s", genome1.getEncodedGenome()));
+                            appendToFile(stats, String.format("player2: %s%n", genome2.getEncodedGenome()));
                         } else {
                             appendToFile(stats, String.format("player1: %s", "humanPlayer"));
-                            appendToFile(stats, String.format("player2: %s%n", genom1.getEncodedGenome()));
+                            appendToFile(stats, String.format("player2: %s%n", genome1.getEncodedGenome()));
                         }
 
                     } else {
 
-                        if (GameProperties.GAMEMODE == 4) {
-                            appendToFile(stats, String.format("player1: %s", genom2.getEncodedGenome()));
-                            appendToFile(stats, String.format("player2: %s%n", genom1.getEncodedGenome()));
+                        if (GameProperties.GAME_MODE == 4) {
+                            appendToFile(stats, String.format("player1: %s", genome2.getEncodedGenome()));
+                            appendToFile(stats, String.format("player2: %s%n", genome1.getEncodedGenome()));
                         } else {
-                            appendToFile(stats, String.format("player1: %s", genom1.getEncodedGenome()));
+                            appendToFile(stats, String.format("player1: %s", genome1.getEncodedGenome()));
                             appendToFile(stats, String.format("player2: %s%n", "humanPlayer"));
                         }
 

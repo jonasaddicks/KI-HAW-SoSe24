@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class GameRules {
 
-    private Board board;
+    private final Board board;
 
     private Player player1;
     private Player player2;
@@ -20,7 +20,7 @@ public class GameRules {
     public GameRules(Genome genome1, Genome genome2) {
         this.board = new Board();
 
-        switch (GameProperties.GAMEMODE) {
+        switch (GameProperties.GAME_MODE) {
             case 0 : { //MULTIPLAYER
                 if (GameProperties.PLAYER1_STARTS) {
                     player1 = new HumanPlayer(PlayerProperty.PLAYER1, board, true);
@@ -70,6 +70,7 @@ public class GameRules {
                 player1 = new AIPlayer(PlayerProperty.PLAYER1, board, true, genome1);
                 player2 = new AIPlayer(PlayerProperty.PLAYER2, board, player1, false, genome2);
                 player1.setOpponent(player2);
+                break;
             }
         }
     }
@@ -77,7 +78,7 @@ public class GameRules {
 
 
     public Player run() {
-        if (GameProperties.GAMEMODE == 3) {
+        if (GameProperties.GAME_MODE == 3) {
             return runTraining();
         } else {
             return runGame();
